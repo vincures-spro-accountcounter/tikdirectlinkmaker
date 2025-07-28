@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>TikTok中間リンク作成</title>
+  <meta charset="UTF-8" />
+  <title>TikTok中間リンク発行ツール</title>
 </head>
 <body>
-  <h1>中間リンク生成ツール</h1>
-  <form id="linkForm">
-    <label>ID: <input type="text" id="id" required></label><br>
-    <label>URL: <input type="text" id="url" required></label><br>
-    <button type="submit">生成</button>
-  </form>
-  <p id="result"></p>
+  <h1>TikTok中間リンク発行ツール</h1>
+  <input type="text" id="tiktokUrl" placeholder="TikTok URLを入力" size="50" />
+  <button onclick="generateLink()">リンク生成</button>
+
+  <h3>発行されたリンク:</h3>
+  <p id="output"></p>
 
   <script>
-    const form = document.getElementById("linkForm");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const id = document.getElementById("id").value;
-      const url = document.getElementById("url").value;
-
-      const res = await fetch(`https://tikdirectlink-api.s-miyata.workers.dev?id=${id}&url=${encodeURIComponent(url)}`);
-      const data = await res.json();
-
-      document.getElementById("result").innerHTML = `
-        <a href="${data.redirectUrl}" target="_blank">✅ 中間リンクはこちら</a>
-      `;
-    });
+    function generateLink() {
+      const inputUrl = document.getElementById("tiktokUrl").value;
+      const encodedUrl = encodeURIComponent(inputUrl);
+      const finalLink = `https://tikdirectlink-api.s-miyata.workers.dev/?url=${encodedUrl}`;
+      document.getElementById("output").innerHTML = `<a href="${finalLink}" target="_blank">${finalLink}</a>`;
+    }
   </script>
 </body>
 </html>
