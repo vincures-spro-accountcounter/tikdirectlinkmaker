@@ -8,7 +8,7 @@
       const url = document.getElementById("tiktokUrl").value.trim();
       const pixel = document.getElementById("pixelId").value.trim();
       if (!url || !pixel) {
-        alert("TikTok URLとピクセルIDの両方を入力してください");
+        alert("商品LPのURLとピクセルIDの両方を入力してください");
         return;
       }
       const encodedUrl = encodeURIComponent(url);
@@ -39,10 +39,10 @@
 <body>
   <h1>TikTok中間リンク生成ツール</h1>
 
-  <label>TikTok URL:</label><br>
-  <input type="text" id="tiktokUrl" placeholder="https://www.tiktok.com/@user/video/..."><br>
+  <label>商品LPのURL:</label><br>
+  <input type="text" id="tiktokUrl" placeholder="https://your-landingpage.com/..."><br>
 
-  <label>ピクセルID:</label><br>
+  <label>TikTokピクセルID:</label><br>
   <input type="text" id="pixelId" placeholder="例: CNX123ABC456"><br>
 
   <button onclick="generate()">リンク生成</button>
