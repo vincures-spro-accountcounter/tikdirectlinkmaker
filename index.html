@@ -2,39 +2,36 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>TikTok中間リンク生成</title>
+  <title>TikTok中間リンク生成ツール</title>
   <script>
     function generate() {
-      const urlInput = document.getElementById("tiktokUrl").value.trim();
-      const pixelId = document.getElementById("pixelId").value.trim();
-
-      if (!urlInput || !pixelId) {
-        alert("TikTokのURLとピクセルIDの両方を入力してください");
+      const url = document.getElementById("tiktokUrl").value.trim();
+      const pixel = document.getElementById("pixelId").value.trim();
+      if (!url || !pixel) {
+        alert("TikTok URLとピクセルIDの両方を入力してください");
         return;
       }
-
-      const encodedUrl = encodeURIComponent(urlInput);
-      const redirectUrl = `https://tikdirectlink-api.s-miyata.workers.dev/?url=${encodedUrl}&pixel=${pixelId}`;
-
-      document.getElementById("output").innerHTML =
-        `<p>以下のリンクを広告に設定してください：</p>
-        <a href="${redirectUrl}" target="_blank">${redirectUrl}</a>`;
+      const encodedUrl = encodeURIComponent(url);
+      const redirect = `https://tikdirectlink-api.s-miyata.workers.dev/?url=${encodedUrl}&pixel=${pixel}`;
+      document.getElementById("result").innerHTML = `<p>👇 生成されたリンク：</p><a href="${redirect}" target="_blank">${redirect}</a>`;
     }
   </script>
   <style>
     body {
       font-family: sans-serif;
+      background: #f2f2f2;
       padding: 2em;
-      background-color: #f9f9f9;
     }
-    input, button {
+    input {
       padding: 0.5em;
-      font-size: 1em;
-      margin-top: 0.5em;
-      width: 100%;
+      width: 90%;
       max-width: 500px;
+      margin-bottom: 1em;
     }
-    #output {
+    button {
+      padding: 0.5em 1em;
+    }
+    #result {
       margin-top: 1.5em;
     }
   </style>
@@ -42,14 +39,14 @@
 <body>
   <h1>TikTok中間リンク生成ツール</h1>
 
-  <label>TikTok動画URL：</label><br>
-  <input id="tiktokUrl" type="text" placeholder="https://www.tiktok.com/@example/video/..." /><br>
+  <label>TikTok URL:</label><br>
+  <input type="text" id="tiktokUrl" placeholder="https://www.tiktok.com/@user/video/..."><br>
 
-  <label>TikTokピクセルID：</label><br>
-  <input id="pixelId" type="text" placeholder="例: CNSDF123456XXX" /><br>
+  <label>ピクセルID:</label><br>
+  <input type="text" id="pixelId" placeholder="例: CNX123ABC456"><br>
 
-  <button onclick="generate()">中間リンクを生成</button>
+  <button onclick="generate()">リンク生成</button>
 
-  <div id="output"></div>
+  <div id="result"></div>
 </body>
 </html>
