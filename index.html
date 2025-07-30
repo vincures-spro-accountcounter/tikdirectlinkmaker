@@ -5,13 +5,14 @@
   <title>TikTok中間リンク生成ツール</title>
   <script>
     function generate() {
-      const url = document.getElementById("tiktokUrl").value.trim();
+      const url = document.getElementById("lpUrl").value.trim();
       if (!url) {
-        alert("LPのURLを入力してください");
+        alert("商品LPのURLを入力してください");
         return;
       }
+
       const encodedUrl = encodeURIComponent(url);
-      const redirect = `https://vincures-spro-accountcounter.github.io/tikdirectlinkmaker/redirect.html?url=${encodedUrl}`;
+      const redirect = `https://tikdirectlink-api.s-miyata.workers.dev/?url=${encodedUrl}`;
       document.getElementById("result").innerHTML = `<p>👇 生成されたリンク：</p><a href="${redirect}" target="_blank">${redirect}</a>`;
     }
   </script>
@@ -38,8 +39,8 @@
 <body>
   <h1>TikTok中間リンク生成ツール</h1>
 
-  <label>LP URL（遷移先）:</label><br>
-  <input type="text" id="tiktokUrl" placeholder="https://ac.2damoon.space/cl/..." /><br>
+  <label>商品LPのURL:</label><br>
+  <input type="text" id="lpUrl" placeholder="https://ac.2damoon.space/..."><br>
 
   <button onclick="generate()">リンク生成</button>
 
