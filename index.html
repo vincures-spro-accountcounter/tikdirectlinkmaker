@@ -2,49 +2,47 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>リダイレクト中...</title>
+  <title>TikTok中間リンク生成ツール</title>
   <script>
-    // クエリから pixel, url を取得
-    const params = new URLSearchParams(location.search);
-    const pixelId = params.get("pixel");
-    const redirectUrl = params.get("url");
-
-    if (pixelId && redirectUrl) {
-      window.ttq = window.ttq || [];
-      (function() {
-        var t = window.ttq;
-        t.methods = ["page"];
-        t.setAndDefer = function(t, e) {
-          t[e] = function() {
-            t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
-          };
-        };
-        for (var i = 0; i < t.methods.length; i++) t.setAndDefer(t, t.methods[i]);
-        t.load = function(e) {
-          var n = document.createElement("script");
-          n.type = "text/javascript";
-          n.async = !0;
-          n.src = "https://analytics.tiktok.com/i18n/pixel/events.js";
-          var a = document.getElementsByTagName("script")[0];
-          a.parentNode.insertBefore(n, a);
-          t._i = t._i || {};
-          t._i[e] = [];
-          t._i[e]._u = n.src;
-          t._t = t._t || {};
-          t._t[e] = +new Date();
-        };
-        t.load(pixelId);
-        t.page();
-      })();
-
-      // 1秒後にリダイレクト
-      setTimeout(() => {
-        location.href = redirectUrl;
-      }, 1000);
+    function generate() {
+      const url = document.getElementById("tiktokUrl").value.trim();
+      if (!url) {
+        alert("LPのURLを入力してください");
+        return;
+      }
+      const encodedUrl = encodeURIComponent(url);
+      const redirect = `redirect.html?url=${encodedUrl}`;
+      document.getElementById("result").innerHTML = `<p>👇 生成されたリンク：</p><a href="${redirect}" target="_blank">${redirect}</a>`;
     }
   </script>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #f2f2f2;
+      padding: 2em;
+    }
+    input {
+      padding: 0.5em;
+      width: 90%;
+      max-width: 500px;
+      margin-bottom: 1em;
+    }
+    button {
+      padding: 0.5em 1em;
+    }
+    #result {
+      margin-top: 1.5em;
+    }
+  </style>
 </head>
 <body>
-  <p>ページを読み込み中です...</p>
+  <h1>TikTok中間リンク生成ツール</h1>
+
+  <label>LP URL（遷移先）:</label><br>
+  <input type="text" id="tiktokUrl" placeholder="https://ac.2damoon.space/cl/..." /><br>
+
+  <button onclick="generate()">リンク生成</button>
+
+  <div id="result"></div>
 </body>
 </html>
