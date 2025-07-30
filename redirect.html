@@ -4,44 +4,43 @@
   <meta charset="UTF-8">
   <title>リダイレクト中...</title>
   <script>
-    // クエリから pixel, url を取得
+    // 固定ピクセルID
+    const pixelId = "CQGRN2RC77U4CIR2T6R0";
+
+    // URLパラメータから遷移先URLを取得
     const params = new URLSearchParams(location.search);
-    const pixelId = params.get("pixel");
-    const redirectUrl = params.get("url");
+    const targetUrl = params.get("url");
 
-    if (pixelId && redirectUrl) {
-      window.ttq = window.ttq || [];
-      (function() {
-        var t = window.ttq;
-        t.methods = ["page"];
-        t.setAndDefer = function(t, e) {
-          t[e] = function() {
-            t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
-          };
-        };
-        for (var i = 0; i < t.methods.length; i++) t.setAndDefer(t, t.methods[i]);
-        t.load = function(e) {
-          var n = document.createElement("script");
-          n.type = "text/javascript";
-          n.async = !0;
-          n.src = "https://analytics.tiktok.com/i18n/pixel/events.js";
-          var a = document.getElementsByTagName("script")[0];
-          a.parentNode.insertBefore(n, a);
-          t._i = t._i || {};
-          t._i[e] = [];
-          t._i[e]._u = n.src;
-          t._t = t._t || {};
-          t._t[e] = +new Date();
-        };
-        t.load(pixelId);
-        t.page();
-      })();
+    // TikTok Pixel埋め込み
+    !function(w,d,t){
+      w.TiktokAnalyticsObject=t;
+      var ttq=w[t]=w[t]||[];
+      ttq.methods=["page"];
+      ttq.setAndDefer=function(t,e){
+        t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))};
+      };
+      for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+      ttq.load=function(e){
+        var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+        var a=document.createElement("script");
+        a.type="text/javascript";a.async=!0;a.src=i;
+        var s=document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(a,s);
+        ttq._i=ttq._i||{};
+        ttq._i[e]=[];ttq._i[e]._u=i;ttq._t=ttq._t||{};ttq._t[e]=+new Date;
+      };
+      ttq.load(pixelId);
+      ttq.page();
+    }(window,document,'ttq');
 
-      // 1秒後にリダイレクト
-      setTimeout(() => {
-        location.href = redirectUrl;
-      }, 1000);
-    }
+    // 数秒後にリダイレクト（Pixelが発火する猶予）
+    setTimeout(() => {
+      if (targetUrl) {
+        location.href = targetUrl;
+      } else {
+        document.body.innerHTML = "<p>URLが指定されていません。</p>";
+      }
+    }, 2000); // 2秒後に遷移
   </script>
 </head>
 <body>
